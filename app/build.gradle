@@ -3,6 +3,10 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 
     defaultConfig {
         applicationId "com.example.spotify"
@@ -20,7 +24,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildFeatures {
+        dataBinding true
+    }
 }
+
+
+
+    def roomVersion = '2.2.1'
+   def  archLifecycleVersion = '2.2.0'
+    def coreTestingVersion = '2.1.0'
+    def materialVersion = '1.0.0'
+
+
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -30,4 +47,20 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+
+
+// Room components
+    implementation "androidx.room:room-runtime:$roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$roomVersion"
+    androidTestImplementation "androidx.room:room-testing:$roomVersion"
+
+// Lifecycle components
+    implementation "androidx.lifecycle:lifecycle-extensions:$archLifecycleVersion"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$archLifecycleVersion"
+
+// UI
+    implementation "com.google.android.material:material:$materialVersion"
+
+// Testing
+    androidTestImplementation "androidx.arch.core:core-testing:$coreTestingVersion"
 }

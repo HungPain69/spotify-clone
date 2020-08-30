@@ -49,11 +49,27 @@ public class MainActivity extends AppCompatActivity {
         mBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
         mContext = this;
-        mListAllSong = new ArrayList<>();
+
         requestPermission();
+
+        mListAllSong = new ArrayList<>();
+        mListAllSong = SongManager.getFileFromStorage(mContext);
+
         initView();
         registerViewModel();
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case 1:
+                for(Song song: mListAllSong){
+                    mViewModel.insert(song);
+                }
+                break;
+        }
     }
 
     private void registerViewModel() {
@@ -61,9 +77,7 @@ public class MainActivity extends AppCompatActivity {
         mViewModel.getmAllSongs().observe(this, new Observer<List<Song>>() {
             @Override
             public void onChanged(List<Song> songs) {
-                mListAllSong = SongManager.getFileFromStorage(mContext);
-                Log.d("thiendieu",mListAllSong.size()+"");
-                mAdapter.setData(mListAllSong);
+                mAdapter.setData(songs);
                 mBinding.recylceView.setAdapter(mAdapter);
             }
         });
@@ -75,14 +89,7 @@ public class MainActivity extends AppCompatActivity {
                                 ,Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
-            case 1:
-                break;
-        }
-    }
+
 
     private void initView(){
         mAdapter = new Adapter(mContext, mOnClick);

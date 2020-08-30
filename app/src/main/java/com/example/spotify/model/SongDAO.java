@@ -12,7 +12,7 @@ import java.util.List;
 public interface SongDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(Song song);
+    void insert(Song... song);
 
     @Query("Delete from  song_table")
     void deleteAll();

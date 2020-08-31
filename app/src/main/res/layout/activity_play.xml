@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="user"
+            type="com.example.spotify.view.PlayActivity" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/view_song_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:fitsSystemWindows="true">
+        <RelativeLayout
+            android:id="@+id/header_layout"
+            android:layout_width="match_parent"
+            android:layout_height="56dp">
+            <ImageView
+                android:id="@+id/iv_back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="12dp"
+                android:src="@drawable/ic_down_arrow"
+                app:tint="@color/transparent_white" />
+            <TextView
+                android:id="@+id/tv_playing_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:text="PLAYING FROM"
+                android:textColor="@color/transparent_white"
+                android:textSize="9dp"/>
+            <TextView
+                android:id="@+id/tv_playing_from_playlist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_playing_from"
+                android:layout_centerHorizontal="true"
+                android:layout_toEndOf="@id/iv_back_button"
+                android:layout_toStartOf="@+id/iv_show_playlist"
+                android:text="Hoang Dung"
+                android:textColor="@color/transparent_white"
+                android:textSize="11dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:padding="3dp"/>
+            <ImageView
+                android:id="@+id/iv_show_playlist"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:padding="12dp"
+                app:tint="@color/transparent_white"
+                android:background="?android:attr/selectableItemBackground"
+                app:srcCompat="@drawable/ic_playlist" />
+        </RelativeLayout>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_view_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/header_layout"
+            android:layout_above="@+id/bottom_layout"
+            android:paddingTop="6dp"
+            android:paddingBottom="30dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+
+            />
+        <LinearLayout
+            android:id="@+id/bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:paddingTop="6dp"
+            android:paddingBottom="42dp">
+            <LinearLayout
+                android:id="@+id/top_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/iv_favourite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="12dp"
+                    app:tint="@color/white"
+                    android:src="@drawable/ic_favorite"/>
+                <LinearLayout
+                    android:id="@+id/song_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="50"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_song_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="6dp"
+                        android:singleLine="true"
+                        android:text="Nang tho"
+                        android:textColor="@color/white"
+                        android:textSize="14dp"/>
+                    <TextView
+                        android:id="@+id/tv_artist_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="HoangDung"
+                        android:textColor="@color/transparent_white"
+                        android:textSize="11dp"
+                        android:maxLines="1"/>
+
+                </LinearLayout>
+                <ImageView
+                    android:id="@+id/iv_show_menu_song"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="12dp"
+                    app:tint="@color/transparent_white"
+                    android:background="?android:attr/selectableItemBackground"
+                    app:srcCompat="@drawable/ic_three_dots" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="6dp">
+                <TextView
+                    android:id="@+id/tv_current_time"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:text="0:00"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:paddingLeft="12dp"
+                    android:textColor="@color/transparent_white"/>
+                <SeekBar
+                    android:id="@+id/seekbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="50"
+                    android:padding="3dp"/>
+
+
+                <TextView
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:text="6:9"
+                    android:paddingBottom="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="12dp"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="@color/transparent_white"
+                   />
+
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp">
+                <ImageButton
+                    android:id="@+id/iv_shuffle"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:padding="12dp"
+                    android:tint="@color/transparent_white"
+                    android:src="@drawable/ic_shuffle"
+                    android:background="@color/black"/>
+                <ImageView
+                    android:id="@+id/iv_previous"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:padding="12dp"
+                    android:background="@color/black"
+                    android:src="@drawable/ic_previous"
+                    app:tint="@color/white" />
+                <ImageView
+                    android:id="@+id/iv_play"
+                    android:layout_width="84dp"
+                    android:layout_height="84dp"
+                    android:padding="12dp"
+                    android:background="@color/black"
+                    app:tint="@color/white"
+                    android:src="@drawable/ic_play"
+                    />
+                <ImageView
+                    android:id="@+id/iv_next"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:padding="12dp"
+                    android:background="@color/black"
+                    android:src="@drawable/ic_next"
+                    app:tint="@color/white" />
+                <ImageButton
+                    android:id="@+id/iv_repeat"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:padding="12dp"
+                    android:tint="@color/transparent_white"
+                    android:src="@drawable/ic_repeat"
+                    android:background="@color/black"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</layout>

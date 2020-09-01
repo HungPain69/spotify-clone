@@ -154,6 +154,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_duration"
                     android:layout_width="48dp"
                     android:layout_height="wrap_content"
                     android:text="6:9"
@@ -198,7 +199,7 @@
                     android:padding="12dp"
                     android:background="@color/black"
                     app:tint="@color/white"
-                    android:src="@drawable/ic_play"
+                    android:src="@drawable/ic_pause"
                     />
                 <ImageView
                     android:id="@+id/iv_next"

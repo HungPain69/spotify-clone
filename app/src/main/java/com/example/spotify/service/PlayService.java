@@ -1,6 +1,5 @@
 package com.example.spotify.service;
 
-import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -14,11 +13,12 @@ import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
-import android.os.PowerManager;
 import android.util.Log;
 
 import com.example.spotify.R;
+
 import com.example.spotify.model.Song;
+import com.example.spotify.utils.Constant;
 import com.example.spotify.view.PlayActivity;
 
 import java.util.List;
@@ -27,6 +27,7 @@ public class PlayService extends Service implements  MediaPlayer.OnPreparedListe
 
     private MediaPlayer mediaPlayer;
     private List<Song> listSong;
+    private Constant.SongState songState = Constant.SongState.IDLE;
     private final IBinder mBinder = new PlayServiceBinder();
 
 
@@ -113,20 +114,41 @@ public class PlayService extends Service implements  MediaPlayer.OnPreparedListe
             mediaPlayer.setDataSource(getApplicationContext(), uri);
         }
         catch(Exception e){
-            Log.d("MUSIC SERVICE", "Error setting data source", e);
+            Log.d("thiendieu", "Error setting data source", e);
         }
         mediaPlayer.prepareAsync();
     }
 
     @Override
     public void onPrepared(MediaPlayer mp) {
-        mp.start();
+        mediaPlayer.start();
+        songState = Constant.SongState.PLAYING;
+    }
+
+    public boolean isPlaying(){
+        return mediaPlayer.isPlaying();
+    }
+
+    public void pause(){
+        mediaPlayer.pause();
+        songState = Constant.SongState.PAUSED;
+    }
+
+    public void resume(){
+        mediaPlayer.start();
+        songState = Constant.SongState.PLAYING;
     }
 
     public void setListSong(List<Song> listSong){
         this.listSong = listSong;
+        Log.d("thiendieu","set list songs to service");
     }
+
     public List<Song> getSong(){
         return listSong;
+    }
+
+    public Constant.SongState getSongState(){
+        return songState;
     }
 }

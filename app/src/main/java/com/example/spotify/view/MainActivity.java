@@ -17,6 +17,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
+import android.os.Parcelable;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import com.example.spotify.databinding.ActivityMainBinding;
 import com.example.spotify.model.Song;
 import com.example.spotify.model.SongManager;
 import com.example.spotify.service.PlayService;
+import com.example.spotify.utils.Constant;
 import com.example.spotify.viewmodel.SongViewModel;
 
 import java.io.File;
@@ -48,23 +50,18 @@ public class MainActivity extends AppCompatActivity {
             Song song = mListSongFromStorage.get(index);
             Toast.makeText(mContext, song.getPath() + "", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(MainActivity.this, PlayActivity.class);
+
+            Bundle bundle = new Bundle();
+            bundle.putInt(Constant.positionSongPicked , index);
+            bundle.putParcelableArrayList(Constant.listAllSong, (ArrayList<? extends Parcelable>) mListAllSong);
+            intent.putExtras(bundle);
+
             binder.play(index);
             startActivity(intent);
         }
     };
 
-    private ServiceConnection serviceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            binder = ((PlayService.PlayServiceBinder) service).getService();
-            binder.setListSong(mListAllSong);
-        }
 
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,11 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         initView();
         registerViewModel();
-
-
-        Intent playIntent = new Intent(this, PlayService.class);
-        bindService(playIntent, serviceConnection, Context.BIND_AUTO_CREATE);
-
+        bindPlayService();
 
     }
 
@@ -126,5 +119,23 @@ public class MainActivity extends AppCompatActivity {
         DividerItemDecoration divider = new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL);
         mBinding.recylceView.addItemDecoration(divider);
 
+    }
+
+    private void bindPlayService(){
+         ServiceConnection serviceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                binder = ((PlayService.PlayServiceBinder) service).getService();
+                binder.setListSong(mListAllSong);
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+
+            }
+        };
+
+        Intent playIntent = new Intent(this, PlayService.class);
+        bindService(playIntent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 }

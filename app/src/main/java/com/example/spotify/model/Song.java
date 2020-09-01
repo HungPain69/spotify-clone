@@ -1,12 +1,15 @@
 package com.example.spotify.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "song_table")
-public class Song {
+public class Song implements Parcelable {
 
     @PrimaryKey
     @NonNull
@@ -33,6 +36,28 @@ public class Song {
 
     public Song() {
     }
+
+    protected Song(Parcel in) {
+        path = in.readString();
+        name = in.readString();
+        artist = in.readString();
+        duration = in.readString();
+        album = in.readString();
+        image = in.readString();
+        favourite = in.readString();
+    }
+
+    public static final Creator<Song> CREATOR = new Creator<Song>() {
+        @Override
+        public Song createFromParcel(Parcel in) {
+            return new Song(in);
+        }
+
+        @Override
+        public Song[] newArray(int size) {
+            return new Song[size];
+        }
+    };
 
     @NonNull
     public String getPath() {
@@ -89,5 +114,21 @@ public class Song {
 
     public void setFavourite(String favourite) {
         this.favourite = favourite;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(path);
+        dest.writeString(name);
+        dest.writeString(artist);
+        dest.writeString(duration);
+        dest.writeString(album);
+        dest.writeString(image);
+        dest.writeString(favourite);
     }
 }
